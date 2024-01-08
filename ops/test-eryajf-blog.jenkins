@@ -1,0 +1,31 @@
+@Library('global-shared-library@main') _
+
+def map = [:]
+    // 定义项目构建运行的 NODE ,根据实际情况进行调整
+    map.put('RUN_NODE','master')
+    // 需要修改此处，定义项目名称
+    map.put('SERVICE_NAME','t-eryajf-blog.eryajf.net')
+    // 定义webroot目录,一般建议/data/www/${SERVICE_NAME}下
+    map.put('WEBROOT_DIR','/data/www/${SERVICE_NAME}')
+    // 定义项目默认的分支，根据实际情况调整
+    map.put('DEFAULT_BRANCH','main')
+    // 定义项目git地址
+    map.put('GIT_URL','https://jihulab.com/eryajf-jenkins/eryajf-blog.git')
+    // 定义主机选项参数，多台用\n分割
+    map.put('HOSTS','ALL\n172.19.192.132')
+    // 定义项目编译命令
+    map.put('BUILD_COMMAND','echo test')
+    // 定义项目部署之后执行的脚本,注意此脚本执行位置为 ${WEBROOT_DIR}
+    map.put('FREE_COMMAND','chown -R www.www /data/www/${SERVICE_NAME}/')
+    // 定义忽略文件或目录，多个用 \n 分割
+    map.put('EXCLUDE_FILE','ansible_tmp\nansible_tmp@tmp\n.git\nnode_modules')
+    // 用于打包编译的基础镜像
+    map.put('BUILD_BASE_IMAGE','eryajf/node:10.6')
+    // 指定将要部署到远程的目录,如果部署根目录，用 . 表示
+    map.put('PROJECT_FILE_PATH','.')
+    // 指定机器人key
+    map.put('ROBOT_KEY','6a781aaf-0cda-41ab-9bd2-ed81ee7fc7d2')
+    // 指定版本的路径以及key，一般不需要更改如下两项
+    map.put('VERSION_KEY', "$JOB_BASE_NAME" )
+    map.put('VERSION_FILE', "/jenkins_sync/version/$JOB_BASE_NAME" )
+deploy_front_base(map)
